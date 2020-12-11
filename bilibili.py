@@ -70,6 +70,6 @@ if __name__ == '__main__':
             print(bangumi_episode)
         sheet.title = str(next_sheet_id)
         out_file.save("bilibili_bangumi.xlsx")
-    except KeyboardInterrupt:
+    except:
         sheet.title = str(next_sheet_id)
         out_file.save("bilibili_bangumi.xlsx")
