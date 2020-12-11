@@ -38,7 +38,7 @@ if __name__ == '__main__':
     try:
         for i in range(sheet_id, sheet_id + 10000):
             next_sheet_id = i
-            time.sleep(0.15)
+            time.sleep(0.2)
             print(i, end=" ")
             title = get_title(i)
             if title == "412":
@@ -48,7 +48,7 @@ if __name__ == '__main__':
 
                 while title == "412":
                     print("ERROR", end=" ")
-                    time.sleep(1800)
+                    time.sleep(1200)
                     title = get_title(i)
 
                 # break
