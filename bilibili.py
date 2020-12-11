@@ -35,37 +35,41 @@ if __name__ == '__main__':
     # sheet.cell(1, 3).alignment = Alignment(horizontal='center', vertical='center')
     row_count = sheet.max_row + 1
 
-    for i in range(sheet_id, next_sheet_id):
-        time.sleep(0.3)
-        print(i, end=" ")
-        title = get_title(i)
-        if title == "412":
+    try:
+        for i in range(sheet_id, sheet_id + 10000):
             next_sheet_id = i
+            time.sleep(0.15)
+            print(i, end=" ")
+            title = get_title(i)
+            if title == "412":
 
-            sheet.title = str(next_sheet_id)
-            out_file.save("bilibili_bangumi.xlsx")
+                sheet.title = str(next_sheet_id)
+                out_file.save("bilibili_bangumi.xlsx")
 
-            while title == "412":
-                print("ERROR", end=" ")
-                time.sleep(1800)
-                title = get_title(i)
+                while title == "412":
+                    print("ERROR", end=" ")
+                    time.sleep(1800)
+                    title = get_title(i)
 
-            # break
-        if title == "出错啦! - bilibili.com":
-            print()
-            continue
-        title_info = title.split("：")
-        title_info[1] = "：".join(title_info[1:])
-        bangumi_name = title_info[0]
-        bangumi_episode = title_info[1].split("_")[0]
-        sheet.cell(row_count, 1).value = i
-        sheet.cell(row_count, 1).alignment = Alignment(horizontal='center', vertical='center')
-        sheet.cell(row_count, 2).value = bangumi_name
-        sheet.cell(row_count, 2).alignment = Alignment(horizontal='center', vertical='center')
-        sheet.cell(row_count, 3).value = bangumi_episode
-        sheet.cell(row_count, 3).alignment = Alignment(horizontal='center', vertical='center')
-        row_count += 1
-        print(bangumi_name, end=" ")
-        print(bangumi_episode)
-    sheet.title = str(next_sheet_id)
-    out_file.save("bilibili_bangumi.xlsx")
+                # break
+            if title == "出错啦! - bilibili.com":
+                print()
+                continue
+            title_info = title.split("：")
+            title_info[1] = "：".join(title_info[1:])
+            bangumi_name = title_info[0]
+            bangumi_episode = title_info[1].split("_")[0]
+            sheet.cell(row_count, 1).value = i
+            sheet.cell(row_count, 1).alignment = Alignment(horizontal='center', vertical='center')
+            sheet.cell(row_count, 2).value = bangumi_name
+            sheet.cell(row_count, 2).alignment = Alignment(horizontal='center', vertical='center')
+            sheet.cell(row_count, 3).value = bangumi_episode
+            sheet.cell(row_count, 3).alignment = Alignment(horizontal='center', vertical='center')
+            row_count += 1
+            print(bangumi_name, end=" ")
+            print(bangumi_episode)
+        sheet.title = str(next_sheet_id)
+        out_file.save("bilibili_bangumi.xlsx")
+    except KeyboardInterrupt:
+        sheet.title = str(next_sheet_id)
+        out_file.save("bilibili_bangumi.xlsx")
