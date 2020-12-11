@@ -36,6 +36,7 @@ if __name__ == '__main__':
     row_count = sheet.max_row + 1
 
     for i in range(sheet_id, next_sheet_id):
+        time.sleep(0.3)
         print(i, end=" ")
         title = get_title(i)
         if title == "412":
