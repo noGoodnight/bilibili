@@ -43,23 +43,32 @@ if __name__ == '__main__':
             title = get_title(i)
             if title == "412":
 
+                print("ERROR", end="        ")
                 sheet.title = str(next_sheet_id)
                 out_file.save("bilibili_bangumi.xlsx")
+                title = get_title(i)
 
                 while title == "412":
-                    print("ERROR", end="        ")
                     time.sleep(1200)
                     title = get_title(i)
+                    print("ERROR", end="        ")
 
                 # break
             if title == "出错啦! - bilibili.com":
                 print()
                 continue
-            title_info = title.split("：")
-            title_info[0] = "：".join(title_info[0:len(title_info) - 1])
-            title_info[1] = title_info[len(title_info) - 1]
-            bangumi_name = title_info[0]
-            bangumi_episode = title_info[1].split("_")[0]
+            if "：" in title:
+                title_info = title.split("：")
+                title_info[0] = "：".join(title_info[0:len(title_info) - 1])
+                title_info[1] = title_info[len(title_info) - 1]
+                bangumi_name = title_info[0]
+                bangumi_episode = title_info[1].split("_")[0]
+            else:
+                print("special", end="        ")
+                title_info = title.split("_")
+                title_info[1] = ""
+                bangumi_name = title_info[0]
+                bangumi_episode = title_info[1].split("_")[0]
             sheet.cell(row_count, 1).value = i
             sheet.cell(row_count, 1).alignment = Alignment(horizontal='center', vertical='center')
             sheet.cell(row_count, 2).value = bangumi_name
