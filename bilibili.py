@@ -19,11 +19,11 @@ if __name__ == '__main__':
     #     sheet = out_file.get_sheet_by_name(out_file.sheetnames[0])
     # except:
     out_file = openpyxl.load_workbook("bilibili_bangumi.xlsx")
-    sheet_id = out_file.sheetnames[0]
+    sheet_id = out_file.sheetnames[1]
     sheet = out_file[sheet_id]
     # sheet.column_dimensions['B'].width = 50
     sheet_id = int(sheet_id)
-    next_sheet_id = sheet_id + 10000
+    next_sheet_id = sheet_id + 100000
 
     # row_count = sheet.max_row
     # # if row_count == 1:
@@ -36,9 +36,9 @@ if __name__ == '__main__':
     row_count = sheet.max_row + 1
 
     try:
-        for i in range(sheet_id, sheet_id + 10000):
+        for i in range(sheet_id, min(sheet_id + 10000,200000)):
             next_sheet_id = i
-            time.sleep(0.2)
+            # time.sleep(0.25)
             print(i, end=" ")
             title = get_title(i)
             if title == "412":
@@ -70,6 +70,6 @@ if __name__ == '__main__':
             print(bangumi_episode)
         sheet.title = str(next_sheet_id)
         out_file.save("bilibili_bangumi.xlsx")
-    except:
+    except KeyboardInterrupt:
         sheet.title = str(next_sheet_id)
         out_file.save("bilibili_bangumi.xlsx")
