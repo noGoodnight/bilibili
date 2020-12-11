@@ -21,7 +21,7 @@ if __name__ == '__main__':
     out_file = openpyxl.load_workbook("bilibili_bangumi.xlsx")
     sheet_id = out_file.sheetnames[1]
     sheet = out_file[sheet_id]
-    # sheet.column_dimensions['B'].width = 50
+    sheet.column_dimensions['B'].width = 50
     sheet_id = int(sheet_id)
     next_sheet_id = sheet_id + 100000
 
@@ -36,10 +36,10 @@ if __name__ == '__main__':
     row_count = sheet.max_row + 1
 
     try:
-        for i in range(sheet_id, min(sheet_id + 10000,200000)):
+        for i in range(sheet_id, min(sheet_id + 10000, 200000)):
             next_sheet_id = i
             # time.sleep(0.25)
-            print(i, end=" ")
+            print(i, end="        ")
             title = get_title(i)
             if title == "412":
 
@@ -47,7 +47,7 @@ if __name__ == '__main__':
                 out_file.save("bilibili_bangumi.xlsx")
 
                 while title == "412":
-                    print("ERROR", end=" ")
+                    print("ERROR", end="        ")
                     time.sleep(1200)
                     title = get_title(i)
 
@@ -56,7 +56,8 @@ if __name__ == '__main__':
                 print()
                 continue
             title_info = title.split("：")
-            title_info[1] = "：".join(title_info[1:])
+            title_info[0] = "：".join(title_info[0:len(title_info) - 1])
+            title_info[1] = title_info[len(title_info) - 1]
             bangumi_name = title_info[0]
             bangumi_episode = title_info[1].split("_")[0]
             sheet.cell(row_count, 1).value = i
@@ -66,10 +67,12 @@ if __name__ == '__main__':
             sheet.cell(row_count, 3).value = bangumi_episode
             sheet.cell(row_count, 3).alignment = Alignment(horizontal='center', vertical='center')
             row_count += 1
-            print(bangumi_name, end=" ")
+            print(bangumi_name, end="        ")
             print(bangumi_episode)
-        sheet.title = str(next_sheet_id)
-        out_file.save("bilibili_bangumi.xlsx")
     except KeyboardInterrupt:
+        print("KeyboardInterrupt")
+    except IndexError:
+        print(title_info)
+    finally:
         sheet.title = str(next_sheet_id)
         out_file.save("bilibili_bangumi.xlsx")
