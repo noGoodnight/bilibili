@@ -18,7 +18,7 @@ if __name__ == '__main__':
     #     out_file = openpyxl.load_workbook("bilibili_bangumi.xlsx")
     #     sheet = out_file.get_sheet_by_name(out_file.sheetnames[0])
     # except:
-    out_file = openpyxl.load_workbook("bilibili_bangumi.xlsx")
+    out_file = openpyxl.load_workbook("bilibili_bangumi_1.xlsx")
     sheet_id = out_file.sheetnames[1]
     sheet = out_file[sheet_id]
     sheet.column_dimensions['B'].width = 50
@@ -84,4 +84,4 @@ if __name__ == '__main__':
         print(title_info)
     finally:
         sheet.title = str(next_sheet_id)
-        out_file.save("bilibili_bangumi.xlsx")
+        out_file.save("bilibili_bangumi_1.xlsx")
