@@ -2,7 +2,7 @@ import openpyxl
 from openpyxl.styles import Alignment
 
 if __name__ == '__main__':
-    workbook = openpyxl.load_workbook("bilibili_bangumi.xlsx")
+    workbook = openpyxl.load_workbook("bilibili_bangumi_0.xlsx")
     # master_sheet = workbook["0"]
     # master_row_count = master_sheet.max_row
     # master_row_count += 1
@@ -27,4 +27,4 @@ if __name__ == '__main__':
     sheet.cell(1, 2).alignment = Alignment(horizontal='center', vertical='center')
     sheet.cell(1, 3).value = "episode"
     sheet.cell(1, 3).alignment = Alignment(horizontal='center', vertical='center')
-    workbook.save("bilibili_bangumi.xlsx")
+    workbook.save("bilibili_bangumi_0.xlsx")

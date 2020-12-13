@@ -15,7 +15,7 @@ def get_title(ep_id: int) -> str:
 
 if __name__ == '__main__':
     # try:
-    #     out_file = openpyxl.load_workbook("bilibili_bangumi.xlsx")
+    #     out_file = openpyxl.load_workbook("bilibili_bangumi_0.xlsx")
     #     sheet = out_file.get_sheet_by_name(out_file.sheetnames[0])
     # except:
     out_file = openpyxl.load_workbook("bilibili_bangumi_2.xlsx")
