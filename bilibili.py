@@ -36,7 +36,7 @@ if __name__ == '__main__':
     row_count = sheet.max_row + 1
 
     try:
-        for i in range(sheet_id, min(sheet_id + 100000, 200000)):
+        for i in range(sheet_id, min(sheet_id + 100000, 300000)):
             next_sheet_id = i
             # time.sleep(0.25)
             print(i, end="        ")
