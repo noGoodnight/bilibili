@@ -18,7 +18,7 @@ if __name__ == '__main__':
     #     out_file = openpyxl.load_workbook("bilibili_bangumi_0.xlsx")
     #     sheet = out_file.get_sheet_by_name(out_file.sheetnames[0])
     # except:
-    out_file = openpyxl.load_workbook("bilibili_bangumi_2.xlsx")
+    out_file = openpyxl.load_workbook("bilibili_bangumi_3.xlsx")
     sheet_id = out_file.sheetnames[0]
     sheet = out_file[sheet_id]
     sheet.column_dimensions['B'].width = 50
@@ -36,7 +36,7 @@ if __name__ == '__main__':
     row_count = sheet.max_row + 1
 
     try:
-        for i in range(sheet_id, min(sheet_id + 100000, 300000)):
+        for i in range(sheet_id, min(sheet_id + 100000, 400000)):
             next_sheet_id = i
             # time.sleep(0.25)
             print(i, end="        ")
@@ -45,7 +45,7 @@ if __name__ == '__main__':
 
                 print("ERROR", end="        ")
                 sheet.title = str(next_sheet_id)
-                out_file.save("bilibili_bangumi_2.xlsx")
+                out_file.save("bilibili_bangumi_3.xlsx")
                 title = get_title(i)
 
                 while title == "412":
@@ -84,4 +84,4 @@ if __name__ == '__main__':
         print(title_info)
     finally:
         sheet.title = str(next_sheet_id)
-        out_file.save("bilibili_bangumi_2.xlsx")
+        out_file.save("bilibili_bangumi_3.xlsx")
