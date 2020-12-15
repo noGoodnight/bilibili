@@ -63,12 +63,14 @@ if __name__ == '__main__':
                 title_info[1] = title_info[len(title_info) - 1]
                 bangumi_name = title_info[0]
                 bangumi_episode = title_info[1].split("_")[0]
+                bangumi_type = title_info[1].split("_")[1]
             else:
-                print("special", end="        ")
+                # print("special", end="        ")
                 title_info = title.split("_")
                 title_info[1] = ""
                 bangumi_name = title_info[0]
                 bangumi_episode = title_info[1].split("_")[0]
+                bangumi_type = title_info[1].split("_")[1]
             sheet.cell(row_count, 1).value = i
             sheet.cell(row_count, 1).alignment = Alignment(horizontal='center', vertical='center')
             sheet.cell(row_count, 2).value = bangumi_name
@@ -77,7 +79,8 @@ if __name__ == '__main__':
             sheet.cell(row_count, 3).alignment = Alignment(horizontal='center', vertical='center')
             row_count += 1
             print(bangumi_name, end="        ")
-            print(bangumi_episode)
+            print(bangumi_episode, end="        ")
+            print(bangumi_type)
     except KeyboardInterrupt:
         print("KeyboardInterrupt")
     except IndexError:
