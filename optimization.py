@@ -85,17 +85,17 @@ if __name__ == '__main__':
     try:
         for i in range(2, row_count + 1):
             ep_id = int(old_sheet.cell(i, 1).value)  # 1
-            if ep_id <= start_id:
+            if ep_id < start_id:
                 continue
 
             content = get_content(ep_id)
             if content == "412":
                 all_workbook.save("bilibili_bangumi_all.xlsx")
                 while content == "412":
-                    print("error", end="        ")
+                    print("error")
                     time.sleep(600)
                     content = get_content(ep_id)
-            if "Σ(oﾟдﾟoﾉ) 无法找到该页面~" in content:
+            if "出错啦! - bilibili.com" in content:
                 continue
             # info = eval(content.split("<script>window.__INITIAL_STATE__=")[1].split(";(function(){")[0])
             info = content.split("<script>window.__INITIAL_STATE__=")[1].split(";(function(){")[0]
@@ -114,7 +114,7 @@ if __name__ == '__main__':
             media_stat_favorites = info["mediaInfo"]["stat"]["favorites"]  # 14
             media_stat_reply = info["mediaInfo"]["stat"]["reply"]  # 15
             media_stat_share = info["mediaInfo"]["stat"]["share"]  # 16
-            media_title = info["mediaInfo"]["title"]  # 2
+            media_title = info["mediaInfo"]["title"]
             media_series = info["mediaInfo"]["series"]  # 6
             # media_ssType = info["mediaInfo"]["ssTypeFormat"]["name"]
             media_pub_time = info["mediaInfo"]["pub"]["time"]  # 8
@@ -124,11 +124,19 @@ if __name__ == '__main__':
             # ep_title = info["epInfo"]["title"]
             ep_titleFormat = info["epInfo"]["titleFormat"]  # 3
             ep_longTitle = info["epInfo"]["longTitle"]  # 4
-            ss_id = ss["id"]  # 5
-            ss_title = ss["title"]
-            ss_type = ss["pgcType"]  # 7
-            ss_views = ss["views"]  # 10
-            ss_follows = ss["follows"]  # 11
+            try:
+                ss_id = ss["id"]
+                ss_title = ss["title"]
+                ss_type = ss["pgcType"]
+                ss_views = ss["views"]
+                ss_follows = ss["follows"]
+            except KeyError:
+                print("KeyError", end="  ")
+                ss_id = info["mediaInfo"]["ssId"]
+                ss_title = media_title
+                ss_type = info["mediaInfo"]["pgcType"]
+                ss_views = info["mediaInfo"]["stat"]["views"]
+                ss_follows = 0
 
             episode_sheet.cell(row, 1).value = ep_id
             episode_sheet.cell(row, 2).value = media_title
