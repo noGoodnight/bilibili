@@ -95,6 +95,8 @@ if __name__ == '__main__':
                     print("error", end="        ")
                     time.sleep(600)
                     content = get_content(ep_id)
+            if "Σ(oﾟдﾟoﾉ) 无法找到该页面~" in content:
+                continue
             # info = eval(content.split("<script>window.__INITIAL_STATE__=")[1].split(";(function(){")[0])
             info = content.split("<script>window.__INITIAL_STATE__=")[1].split(";(function(){")[0]
             info = info.replace("false", "False")
