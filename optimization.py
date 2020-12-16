@@ -83,9 +83,11 @@ if __name__ == '__main__':
         start_id = 0
 
     try:
-        for i in range(2, row_count + 1):
+        i = 2
+        while i < row_count + 1:
             ep_id = int(old_sheet.cell(i, 1).value)  # 1
             if ep_id < start_id:
+                i += 1
                 continue
 
             content = get_content(ep_id)
@@ -96,9 +98,13 @@ if __name__ == '__main__':
                     time.sleep(600)
                     content = get_content(ep_id)
             if "出错啦! - bilibili.com" in content:
+                i += 1
                 continue
             # info = eval(content.split("<script>window.__INITIAL_STATE__=")[1].split(";(function(){")[0])
-            info = content.split("<script>window.__INITIAL_STATE__=")[1].split(";(function(){")[0]
+            try:
+                info = content.split("<script>window.__INITIAL_STATE__=")[1].split(";(function(){")[0]
+            except IndexError:
+                continue
             info = info.replace("false", "False")
             info = info.replace("null", "None")
             info = info.replace("true", "True")
@@ -202,6 +208,8 @@ if __name__ == '__main__':
             print(ep_longTitle, end="  ")
             print(ss_id, end="  ")
             print(media_series)
+
+            i += 1
     except KeyboardInterrupt:
         print("KeyboardInterrupt")
     finally:
