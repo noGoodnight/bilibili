@@ -137,7 +137,7 @@ if __name__ == '__main__':
                 ss_views = ss["views"]
                 ss_follows = ss["follows"]
             except KeyError:
-                print("KeyError", end="  ")
+                print("series-error", end="  ")
                 ss_id = info["mediaInfo"]["ssId"]
                 ss_title = media_title
                 ss_type = info["mediaInfo"]["pgcType"]
