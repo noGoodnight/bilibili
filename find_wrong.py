@@ -25,6 +25,6 @@ if __name__ == '__main__':
     rowcount1 = sheet1.max_row
     rowcount0 = sheet0.max_row
     rowcountall = sheetall.max_row
-    gap = 37815
-    # gap = diff(sheet0, gap)
+    gap = 0
+    gap = diff(sheet0, gap)
     gap = diff(sheet1, gap)

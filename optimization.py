@@ -32,6 +32,7 @@ def save_series(sheet, series_info):
     sheet.cell(series_info[0], 13).value = series_info[12]
     sheet.cell(series_info[0], 14).value = series_info[13]
     sheet.cell(series_info[0], 15).value = series_info[14]
+    sheet.cell(series_info[0], 16).value = series_info[15]
 
     print(series_info[0], end="  ")
     print(series_info[1], end="  ")
@@ -47,11 +48,12 @@ def save_series(sheet, series_info):
     print(series_info[11], end="  ")
     print(series_info[12], end="  ")
     print(series_info[13], end="  ")
-    print(series_info[14])
+    print(series_info[14], end="  ")
+    print(series_info[15])
 
 
 if __name__ == '__main__':
-    old_workbook = openpyxl.load_workbook("bilibili_bangumi_1.xlsx")
+    old_workbook = openpyxl.load_workbook("bilibili_bangumi_3.xlsx")
     all_workbook = openpyxl.load_workbook("bilibili_bangumi_all.xlsx")
     old_sheet = old_workbook[old_workbook.sheetnames[0]]
     episode_sheet = all_workbook[all_workbook.sheetnames[0]]
@@ -122,7 +124,7 @@ if __name__ == '__main__':
             media_stat_share = info["mediaInfo"]["stat"]["share"]  # 16
             media_title = info["mediaInfo"]["title"]
             media_series = info["mediaInfo"]["series"]  # 6
-            # media_ssType = info["mediaInfo"]["ssTypeFormat"]["name"]
+            media_ssType = info["mediaInfo"]["ssTypeFormat"]["name"]
             media_pub_time = info["mediaInfo"]["pub"]["time"]  # 8
             media_rating_score = info["mediaInfo"]["rating"]["score"]  # 17
             media_rating_count = info["mediaInfo"]["rating"]["count"]  # 18
@@ -136,13 +138,16 @@ if __name__ == '__main__':
                 ss_type = ss["pgcType"]
                 ss_views = ss["views"]
                 ss_follows = ss["follows"]
+                ss_error = False
             except KeyError:
-                print("series-error", end="  ")
                 ss_id = info["mediaInfo"]["ssId"]
                 ss_title = media_title
                 ss_type = info["mediaInfo"]["pgcType"]
                 ss_views = info["mediaInfo"]["stat"]["views"]
                 ss_follows = 0
+                ss_error = True
+            if ss_title == "":
+                ss_title = media_title
 
             episode_sheet.cell(row, 1).value = ep_id
             episode_sheet.cell(row, 2).value = media_title
@@ -196,12 +201,14 @@ if __name__ == '__main__':
                 media_stat_reply,
                 media_stat_share,
                 media_rating_score,
-                media_rating_count
+                media_rating_count,
+                media_ssType
             ]
             save_series(series_sheet, ss_info)
 
             row += 1
 
+            if ss_error: print("series_error", end="  ")
             print(ep_id, end="  ")
             print(media_title, end="  ")
             print(ep_titleFormat, end="  ")
