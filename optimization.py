@@ -53,7 +53,7 @@ def save_series(sheet, series_info):
 
 
 if __name__ == '__main__':
-    old_workbook = openpyxl.load_workbook("bilibili_bangumi_3.xlsx")
+    old_workbook = openpyxl.load_workbook("bilibili_bangumi_0.xlsx")
     all_workbook = openpyxl.load_workbook("bilibili_bangumi_all.xlsx")
     old_sheet = old_workbook[old_workbook.sheetnames[0]]
     episode_sheet = all_workbook[all_workbook.sheetnames[0]]
