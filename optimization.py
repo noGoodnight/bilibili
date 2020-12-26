@@ -53,11 +53,12 @@ def save_series(sheet, series_info):
 
 
 if __name__ == '__main__':
-    old_workbook = openpyxl.load_workbook("bilibili_bangumi_0.xlsx")
+    old_workbook = openpyxl.load_workbook("bilibili_bangumi_1.xlsx")
     all_workbook = openpyxl.load_workbook("bilibili_bangumi_all.xlsx")
+    series_workbook = openpyxl.load_workbook("series.xlsx")
     old_sheet = old_workbook[old_workbook.sheetnames[0]]
     episode_sheet = all_workbook[all_workbook.sheetnames[0]]
-    series_sheet = all_workbook[all_workbook.sheetnames[1]]
+    series_sheet = series_workbook[series_workbook.sheetnames[0]]
 
     # all_sheet.cell(1,1).alignment = Alignment(horizontal='center', vertical='center')
     # all_sheet.cell(1,2).alignment = Alignment(horizontal='center', vertical='center')
@@ -95,12 +96,14 @@ if __name__ == '__main__':
             content = get_content(ep_id)
             if content == "412":
                 all_workbook.save("bilibili_bangumi_all.xlsx")
+                series_workbook.save("series.xlsx")
                 while content == "412":
                     print("error")
-                    time.sleep(600)
+                    time.sleep(300)
                     content = get_content(ep_id)
             if "出错啦! - bilibili.com" in content:
                 i += 1
+                print("missing")
                 continue
             # info = eval(content.split("<script>window.__INITIAL_STATE__=")[1].split(";(function(){")[0])
             try:
@@ -113,9 +116,9 @@ if __name__ == '__main__':
             info = eval(info)
 
             ss = {}
-            for series in info["ssList"]:
-                if series["id"] == info["mediaInfo"]["ssId"]:
-                    ss = series
+            for series_workbook in info["ssList"]:
+                if series_workbook["id"] == info["mediaInfo"]["ssId"]:
+                    ss = series_workbook
                     break
             media_stat_coins = info["mediaInfo"]["stat"]["coins"]  # 13
             media_stat_danmakus = info["mediaInfo"]["stat"]["danmakus"]  # 12
@@ -223,3 +226,5 @@ if __name__ == '__main__':
         old_workbook.close()
         all_workbook.save("bilibili_bangumi_all.xlsx")
         all_workbook.close()
+        series_workbook.save("series.xlsx")
+        series_workbook.close()
