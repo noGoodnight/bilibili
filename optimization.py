@@ -116,9 +116,9 @@ if __name__ == '__main__':
             info = eval(info)
 
             ss = {}
-            for series_workbook in info["ssList"]:
-                if series_workbook["id"] == info["mediaInfo"]["ssId"]:
-                    ss = series_workbook
+            for series in info["ssList"]:
+                if series["id"] == info["mediaInfo"]["ssId"]:
+                    ss = series
                     break
             media_stat_coins = info["mediaInfo"]["stat"]["coins"]  # 13
             media_stat_danmakus = info["mediaInfo"]["stat"]["danmakus"]  # 12
